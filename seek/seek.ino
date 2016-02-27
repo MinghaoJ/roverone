@@ -1,9 +1,10 @@
-#include <SoftwareSerial.h>;
-#include <Servo.h>;
+#include <SoftwareSerial.h>
+#include <Servo.h>
+
+#define USE_SOFT_SER 1
 
 SoftwareSerial bluetooth(11,10); //RX TX (connect pin11(RX) to TX on the module.
 //Servo MyServo;
-#define USE_SOFT_SER 1
 
 void setup() {
   Serial.begin(9600);

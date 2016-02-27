@@ -14,8 +14,9 @@ void setup()
     Serial.begin(9600);
     MySerial.begin(9600);
     while (!MySerial.available()) {
-      Serial.print(
+      Serial.print("bluetooth serial not available");
     }
+    Serial.print("bluetooth serial available");
     //MyServo.attach(2); output to servo motor;
 }
 

@@ -12,9 +12,6 @@
 int left_pin[] = {11, 10};
 int right_pin[] = {6, 5};
 
-int left_speed = 0;
-int right_speed = 0;
-
 void setLeftMotorTo(int speed);
 void setRightMotorTo(int speed);
 //Servo MyServo;
@@ -69,42 +66,28 @@ void loop() {
   }
 }
 
-void setMotorTo(int pin, int current_speed, int target_speed) {
-  if (target_speed > current_speed) {
-    // loop up from the current speed
-    for (int i = current_speed; i < target_speed; i += 10) {
-      analogWrite(pin, i);
-    }
-  } else if (target_speed < current_speed) {
-    // loop down from the current speed
-    for (int i = current_speed; i > target_speed; i -= 10) {
-      analogWrite(pin, i);
-    }
-  }
-  analogWrite(pin, target_speed);
-
-}
-
 void setLeftMotorTo(int target_speed) {
-  if (target_speed > 0) {
-    analogWrite(left_pin[0], 0);
-    setMotorTo(left_pin[1], left_speed, target_speed);
+  if (target_speed < 0) {
+    digitalWrite(left_pin[0], LOW);
+    digitalWrite(left_pin[1], HIGH);
+  } else if (target_speed > 0) {
+    digitalWrite(left_pin[0], HIGH);
+    digitalWrite(left_pin[1], LOW);
   } else {
-    analogWrite(left_pin[1], 0);
-    setMotorTo(left_pin[0], left_speed, -target_speed);
+    digitalWrite(left_pin[0], LOW);
+    digitalWrite(left_pin[1], LOW);
   }
-
-  left_speed = target_speed;
 }
 
 void setRightMotorTo(int target_speed) {
-  if (target_speed > 0) {
-    analogWrite(right_pin[0], 0);
-    setMotorTo(right_pin[1], right_speed, target_speed);
+  if (target_speed < 0) {
+    digitalWrite(right_pin[0], LOW);
+    digitalWrite(right_pin[1], HIGH);
+  } else if (target_speed > 0) {
+    digitalWrite(right_pin[0], HIGH);
+    digitalWrite(right_pin[1], LOW);
   } else {
-    analogWrite(right_pin[1], 0);
-    setMotorTo(right_pin[0], right_speed, -target_speed);
+    digitalWrite(right_pin[0], LOW);
+    digitalWrite(right_pin[1], LOW);
   }
-
-  right_speed = target_speed;
 }

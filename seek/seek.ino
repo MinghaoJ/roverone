@@ -20,14 +20,16 @@ void loop() {
   if (bluetooth.available()) {
     int command = bluetooth.read();
 
-    if (command == 97) { // 97 is the code for a
-     Serial.print(" a ");
-     digitalWrite(13, HIGH);
-    }
+    switch (command) {
+      case 'a':
+        Serial.print("a was sent");
+        digitalWrite(13, HIGH);
+        break;
 
-    if (command == 98) { // 98 is the code for b
-      Serial.print(" b ");
-      digitalWrite(13, LOW);
+      case 'b':
+        Serial.print("b was sent");
+        digitalWrite(13, LOW);
+        break;
     }
   }
 }

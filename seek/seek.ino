@@ -11,6 +11,8 @@
 
 int left_pin[] = {11, 10};
 int right_pin[] = {6, 5};
+int light_pin = 4;
+boolean lights = false;
 
 void setLeftMotorTo(int speed);
 void setRightMotorTo(int speed);
@@ -26,6 +28,9 @@ void setup() {
   pinMode(left_pin[1], OUTPUT);
   pinMode(right_pin[0], OUTPUT);
   pinMode(right_pin[1], OUTPUT);
+  pinMode(4, INPUT);
+  
+  digitalWrite(4, LOW);
 }
 
 void loop() {
@@ -58,6 +63,15 @@ void loop() {
         // set the left to go backwards at a speed x
         setLeftMotorTo(-126);
         Serial.print("l\n");
+        break;
+      case 'h':
+        if(lights) {
+          pinMode(light_pin, INPUT);
+        }
+        else {
+          pinMode(light_pin, OUTPUT);
+        }
+        lights = !lights;
         break;
     }
     // sleep for n seconds

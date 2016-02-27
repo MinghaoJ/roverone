@@ -21,13 +21,11 @@ void setup() {
   Serial.begin(9600);
 #endif
   bluetooth.begin(9600);
-  while (!bluetooth.available()) {
-#if USE_SOFT_SER
-    Serial.print("bluetooth serial not available");
-#endif
-  }
-  Serial.print("bluetooth serial available");
-  //MyServo.attach(2); output to servo motor;
+  
+  pinMode(left_pin[0], OUTPUT);
+  pinMode(left_pin[1], OUTPUT);
+  pinMode(right_pin[0], OUTPUT);
+  pinMode(right_pin[1], OUTPUT);
 }
 
 void loop() {
@@ -39,27 +37,31 @@ void loop() {
         // set both motors to go forwards at the same speed
         setLeftMotorTo(126);
         setRightMotorTo(126);
+        Serial.print("f\n");
         break;
       case 'b': // move backward
         // set both motors to go backwards at the same speed
         setLeftMotorTo(-126);
         setRightMotorTo(-126);
+        Serial.print("b\n");
         break;
       case 'r': // turn right
         // set the right to go backwards at a speed x
         setRightMotorTo(-126);
         // set the left to go forwards at speed x
         setLeftMotorTo(126);
+        Serial.print("r\n");
         break;
       case 'l': // turn left
         // set the right to go forwards at speed x
         setRightMotorTo(126);
         // set the left to go backwards at a speed x
         setLeftMotorTo(-126);
+        Serial.print("l\n");
         break;
     }
     // sleep for n seconds
-    delay(500);
+    delay(1000);
     // set both motors to 0
     setLeftMotorTo(0);
     setRightMotorTo(0);

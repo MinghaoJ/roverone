@@ -9,6 +9,8 @@
   #define bluetooth Serial
 #endif
 
+int left_speed = 0;
+int right_speed = 0;
 void setLeftMotorTo(int speed);
 void setRightMotorTo(int speed);
 //Servo MyServo;
@@ -19,7 +21,9 @@ void setup() {
 #endif
   bluetooth.begin(9600);
   while (!bluetooth.available()) {
+#if USE_SOFT_SER
     Serial.print("bluetooth serial not available");
+#endif
   }
   Serial.print("bluetooth serial available");
   //MyServo.attach(2); output to servo motor;
@@ -61,10 +65,30 @@ void loop() {
   }
 }
 
-void setLeftMotorTo(int speed) {
+void setMotorTo(int pin, int current_speed, int target_speed) {
+  if (target_speed > current_speed) {
+    // loop up from the current speed
+    for (int i = current_speed; i < target_speed; i += 10) {
+      analogWrite(pin, i);
+    }
+  } else if (target_speed < current_speed) {
+    // loop down from the current speed
+    for (int i = current_speed; i > target_speed; i -= 10) {
+      analogWrite(pin, i);
+    }
+  }
+  analogWrite(pin, target_speed);
 
 }
 
-void setRightMotorTo(int speed) {
+void setLeftMotorTo(int target_speed) {
+  int motor_pin = 0/* ??? */;
+  setMotorTo(motor_pin, left_speed, target_speed);
+  left_speed = target_speed;
+}
 
+void setRightMotorTo(int target_speed) {
+  int motor_pin = 0/* ??? */;
+  setMotorTo(motor_pin, right_speed, target_speed);
+  right_speed = target_speed;
 }
